@@ -59,6 +59,7 @@ const generateREADME = (answers) => {
 
   Feel free to check out my GitHub if you'd like to view more of my work!
   [https://github.com/${answers.github}](https://github.com/${answers.github})`;
+  
   // returns answersFormatted string to be written to file
   return answersFormatted;
 }
