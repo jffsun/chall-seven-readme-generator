@@ -1,11 +1,10 @@
-// TODO: Include packages needed for this application
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-// genMark returns the generateREADME function that was exported 
-const genMark = require('./utils/generateMarkdown')
+// genMark returns the exported generateREADME function
+const genMark = require('./generateMarkdown')
 
-// inquirer questions for user input
+// inquirer prompts for user input
 inquirer 
     .prompt([
         {
@@ -22,6 +21,11 @@ inquirer
             type: 'input',
             name: 'install',
             message: 'How does the user install your application? Provide a step-by-step description.',
+        },
+        {
+            type: 'input',
+            name: 'usage',
+            message: 'Explain why your application is useful and how it should be used.',
         },
         {
             type: 'input',
@@ -44,20 +48,24 @@ inquirer
             'I don’t want a license.'
             ],
         },
+        {
+            type: 'input',
+            name: 'github',
+            message: 'Enter your Github username.',
+        },
+        {
+            type: 'input',
+            name: 'email',
+            message: 'Enter your email address.',
+        },
   ])
 
   .then((answers) => {
 
     // prompt answers as values in generateREADME function
     const mdContent = genMark(answers);
-    console.log(mdContent);
+
     fs.writeFile('README.md', mdContent, (err) =>
       err ? console.log(err) : console.log('Successfully created README.md!')
     );
   });
-
-// TODO: Create a function to initialize app
-
-// Function call to initialize app
-// init();
-
