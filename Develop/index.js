@@ -2,9 +2,12 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
 
-// TODO: Create an array of questions for user input
-const promptUser = () => {
-   return inquirer .prompt([
+// genMark returns the generateREADME function that was exported 
+const genMark = require('./utils/generateMarkdown')
+
+// inquirer questions for user input
+inquirer 
+    .prompt([
         {
             type: 'input',
             name: 'title',
@@ -34,19 +37,27 @@ const promptUser = () => {
             type: 'checkbox',
             message: 'Which license will you use for your application?',
             name: 'license',
-            choices: ['Apache License 2.0', 'MIT License', 'GNU GPLv3', 'I don’t want a license.'],
+            choices: [
+            'Apache License 2.0', 
+            'MIT License', 
+            'GNU GPLv3', 
+            'I don’t want a license.'
+            ],
         },
-      
-    ]);
-};
+  ])
+
+  .then((answers) => {
+
+    // prompt answers as values in generateREADME function
+    const mdContent = genMark(answers);
+    console.log(mdContent);
+    fs.writeFile('README.md', mdContent, (err) =>
+      err ? console.log(err) : console.log('Successfully created README.md!')
+    );
+  });
 
 // TODO: Create a function to initialize app
-const init = () => {
-    promptUser()
-    .then((content) => fs.writeFileSync('README.md', generateREADME(content)))
-    .then(() => console.log('README successfully generated!'))
-    .catch((err) => console.error(err));
-};
 
 // Function call to initialize app
-init();
+// init();
+
